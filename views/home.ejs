@@ -2,35 +2,36 @@
 <html lang="en">
 
 <head>
-    <%-include('./partials/head.ejs')%>
-        <title>Homepage</title>
-        <style>
-
-        </style>
+    <%- include('./partials/head.ejs') %>
+    <title>Homepage</title>
+    <style>
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+        }
+    </style>
 </head>
 
 <body>
-    <%-include('./partials/nav.ejs')%>
-        <div class="container mt-3">
-            <div class="row row-cols-4">
+    <%- include('./partials/nav.ejs') %>
 
-                <% blogs.forEach(blog=> { %>
-                    <div class="col">
-
-                        <div class="card col" style="width: 18rem;">
-                            <img src="<%= blog.coverImageUrl %>" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">
-                                    <%= blog.title %>
-                                </h5>
-                                <a href="/blog/<%= blog._id %>" class="btn btn-primary">View</a>
-                            </div>
+    <div class="container mt-3">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+            <% blogs.forEach(blog => { %>
+                <div class="col">
+                    <div class="card h-100 shadow-sm">
+                        <img src="<%= blog.coverImageUrl %>" class="card-img-top" alt="...">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title"><%= blog.title %></h5>
+                            <a href="/blog/<%= blog._id %>" class="btn btn-primary mt-auto">View</a>
                         </div>
                     </div>
-                 <% }) %>
-            </div>
+                </div>
+            <% }) %>
         </div>
-        <%-include('./partials/script.ejs')%>
+    </div>
+
+    <%- include('./partials/script.ejs') %>
 </body>
 
 </html>
