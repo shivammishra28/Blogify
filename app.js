@@ -5,20 +5,17 @@ const app=express();
 const PORT =process.env.PORT || 8000;
 const userRouter=require("./routes/user")
 const blogrouter =require("./routes/blog")
-const mongoose=require("mongoose")
+const mongoose=require("mongoose");
 const cookieparser=require("cookie-parser");
 const {checkforAuthCookie}=require("./middelware/authentication")
 const Blog=require("./models/blog")
 
-mongoose.connect(process.env.MONGO_URL).then(() => {
+mongoose.connect("mongodb://localhost:27017/blogify").then(()=>{
     console.log("Mongodb Connected");
-  }).catch((err) => {
-    console.error("MongoDB Connection Error:", err);
-  });
+}).catch((err)=>{
+    console.error("MongoDB Connection Error:", err);  
+});
   
-  
-
-
 app.use(express.static(path.resolve('./public')))
 
 app.set("view engine","ejs");
