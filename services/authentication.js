@@ -1,6 +1,6 @@
 const JWT =require("jsonwebtoken");
 
-const secret="superman@123";
+const secret= process.env.JWT_SECRET;
 
 function creteTokenForUser(user){
     const payload={
