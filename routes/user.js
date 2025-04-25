@@ -24,7 +24,11 @@ router.post("/signin",async(req,res)=>{
 //    
 try {
     const token= await User.matchpasswordAndGenerateToken(email,password);
-    console.log("token",token);
+    // console.log("token",token);
+
+    const user = await User.findOne({ email });
+    res.locals.user = user;
+
     return res.cookie("token",token).redirect("/");
 
 

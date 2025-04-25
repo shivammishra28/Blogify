@@ -9,8 +9,11 @@ function checkforAuthCookie(cookiename){
             try {
                 const userpayload=ValidateToken(tokenCookieValue);
                 req.user=userpayload;
+                res.locals.user=userpayload;
 
-            } catch(error){}
+            } catch(error){
+                console.warn("Invalid token:", error.message);
+            }
            return next(); 
     }
 }

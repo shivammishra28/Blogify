@@ -7,6 +7,7 @@ function creteTokenForUser(user){
         _id:user._id,
         email:user.email,
         profileImageUrl:user.profileImageUrl,
+        fullName: user.fullName,
         role:user.role,
     };
     const token =JWT.sign(payload,secret);
