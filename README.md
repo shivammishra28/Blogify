@@ -11,11 +11,13 @@ Follow these steps to get your project up and running.
 ```bash
 git clone git https://github.com/shivammishra28/Blogify.git
 cd blogging-application-with-mongodb
+```
 
- Install Dependencies
+ ### 2. Install Dependencies
 Before starting, you need to install the necessary dependencies. Run the following command:
-
+```bash
 npm install
+```
 
 This will install the following dependencies:
 
@@ -33,14 +35,14 @@ mongoose: MongoDB object modeling tool.
 
 multer: Middleware for handling file uploads (e.g., blog images).
 
-reate a .env file
+### create a .env file
 Create a .env file in the root directory and add your environment variables. Example:
 
+MONGO_URI=your-mongo-uri
 
-MONGO_URI=mongodb://localhost:27017/blogify
 JWT_SECRET=your_jwt_secret_key
 
-Run the Application
+### 3. Run the Application
 Once the dependencies are installed and your .env file is configured, start the application:
 npm start
 
