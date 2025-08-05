@@ -1,59 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <%-include('./partials/head.ejs')%>
-    <title>Blog</title>
+    <%- include('./partials/head.ejs') %>
+    <title><%= blog.title %> | Blog</title>
     <style>
-     
-  .blog-body {
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-  }
+        .blog-body {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
 
-  @media (max-width: 768px) {
-    .blog-body p {
-      font-size: 1rem;
-    }
-  }
-</style>
+        @media (max-width: 768px) {
+            .blog-body p {
+                font-size: 1rem;
+            }
+        }
 
-    
+        .comment-box {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #f8f8f8;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
-    <%-include('./partials/nav.ejs')%>
-    <div class="container">
+    <%- include('./partials/nav.ejs') %>
+
+    <div class="container mt-4">
         <h1><%= blog.title %></h1>
-        <img src="<%= blog.coverImageUrl %>" class="img-fluid rounded my-3" alt="Blog Cover Image">
+        <% if (blog.coverImageUrl) { %>
+            <img src="<%= blog.coverImageUrl %>" class="img-fluid rounded my-3" alt="Blog Cover Image">
+        <% } %>
+
         <div class="blog-body">
-            <p class="mt-3"><%= blog.body %></p>
+            <%- blog.body %> <!-- Use unescaped HTML for rich content -->
         </div>
     </div>
 
-    <div class="container mt-4">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_LnhwLXP1Ue8GYWenpakaD7tOQH-kjtRUSA&s" width="50px" alt=""> <%= blog.createdBy.fullName%>
+    <div class="container mt-4 d-flex align-items-center">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_LnhwLXP1Ue8GYWenpakaD7tOQH-kjtRUSA&s" width="50px" alt="User Avatar" class="me-2">
+        <span><strong><%= blog.createdBy.fullName %></strong></span>
     </div>
 
-    <div class="container mt-4">
-        <h1>Commnets (<%= Comment.length %>)</h1>
+    <div class="container mt-5">
+        <h2>Comments (<%= Comment.length %>)</h2>
+
         <% if (locals.user) { %>
-            <form action="/blog/comment/<%= blog._id %>" method="post">
-            <div class="mb-3">
-              <input type="text" class="form-control" id="content" aria-describedby="emailHelp" name="content" placeholder="Enter Your Comment">
-              <button type="submit" class="btn btn-md btn-primary">Add</button>
+            <form action="/blog/comment/<%= blog._id %>" method="POST" class="mb-4">
+                <div class="mb-3">
+                    <input type="text" class="form-control" name="content" placeholder="Enter your comment" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Comment</button>
             </form>
-      <% } %>
-      <div class="mt-3">
-        <% Comment.forEach(comment => { %>
-            <div>
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_LnhwLXP1Ue8GYWenpakaD7tOQH-kjtRUSA&s" width="40px" alt="">:
-                <pre>
-                    <%= comment.content %>
-                </pre>
-            </div>
-        <% }) %>
-      </div>
+        <% } else { %>
+            <p><a href="/login">Login</a> to comment.</p>
+        <% } %>
+
+        <div class="mt-3">
+            <% Comment.forEach(comment => { %>
+                <div class="comment-box">
+                    <div class="d-flex align-items-center mb-2">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_LnhwLXP1Ue8GYWenpakaD7tOQH-kjtRUSA&s" width="40px" class="me-2" alt="User">
+                        <strong><%= comment.createdBy?.fullName || 'Anonymous' %></strong>
+                    </div>
+                    <p><%= comment.content %></p>
+                </div>
+            <% }) %>
+        </div>
     </div>
 
+    <%- include('./partials/script.ejs') %>
 </body>
-<%-include('./partials/script.ejs')%>
 </html>

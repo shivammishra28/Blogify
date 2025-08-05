@@ -18,6 +18,8 @@ mongoose.connect(process.env.MONGO_URL).then(()=>{
 });
   
 app.use(express.static(path.resolve('./public')))
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 
 app.set("view engine","ejs");
 app.set("views",path.resolve("./views"));
